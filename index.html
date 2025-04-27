@@ -24,14 +24,128 @@
         #rodape-container img {
             height: auto;
         }
+
+        /* Styles for the animation */
+        .animated-click {
+            animation: click-animation 1s ease-in-out;
+        }
+
+        @keyframes click-animation {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            25% {
+                transform: scale(1.2) rotate(-5deg);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 1;
+            }
+
+            75% {
+                transform: scale(1.2) rotate(-2deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .redes-item img {
+            transition: all 0.3s ease;
+        }
+
+        .redes-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Styles for the cursor animation */
+        #fake-cursor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            /* Usando a imagem como cursor */
+            background-image: url('imagens/cursor.png'); /* 1. VERIFIQUE ESTE CAMINHO!!! */
+            background-size: cover;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            animation: cursor-animation 3s forwards;
+            transform-origin: center center;
+        }
+
+        @keyframes cursor-animation {
+            0% {
+                top: 50px;
+                left: 50px;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            25% {
+                top: 95px;
+                left: calc(100% - 45px);
+            }
+
+            60% {
+                top: 170px;
+                left: calc(100% - 45px);
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+
+            70% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+                top: 210px;
+                left: calc(100% - 45px);
+            }
+        }
+
+        /* 2. TENTATIVA DE AUMENTAR A ESPECIFICIDADE (use com cautela) */
+        /* #fake-cursor {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 24px !important;
+            height: 24px !important;
+            background-image: url('imagens/cursor.png') !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            pointer-events: none !important;
+            animation: cursor-animation 4s forwards !important;
+            transform-origin: center center !important;
+        } */
     </style>
 </head>
 
 <body>
-    <main>
-        <section id="telefone">
-            <iframe src="home.html" name="tela" id="tela" frameborder="0">Infelizmente o seu navegador não é compatível com
-                este conteúdo.</iframe>
+    <main style="position: relative;">  <section id="telefone">
+            <iframe src="home.html" name="tela" id="tela" frameborder="0">
+                Infelizmente o seu navegador não é compatível com este conteúdo.
+            </iframe>
 
             <button id="instagramBtn">
                 <a class="ocultavel" href="tel:+5516997607385" target="_blank"
@@ -48,17 +162,25 @@
             </button>
         </section>
         <section id="redes-sociais">
-            <a id="linkHome" href="home.html" target="tela" data-target="home.html"><img src="imagens/logo-home.jpg"
-                    alt="Home"></a><br>
+            <a id="linkHome" href="home.html" target="tela" data-target="home.html">
+                <img src="imagens/logo-home.jpg" alt="Home">
+            </a><br>
 
-            <a class="redes-item" href="instagram.html" target="tela" data-target="instagram.html"><img
-                    src="imagens/logo-instagram.jpg" alt="Instagram"></a><br>
-            <a class="redes-item" href="facebook.html" target="tela" data-target="facebook.html"><img
-                    src="imagens/logo-facebook.jpg" alt="Facebook"></a><br>
-            <a class="redes-item" href="https://wa.me/5516997607385"><img src="imagens/whatsap.png" alt="whatsap"></a><br>
-            <a class="redes-item" href="tel:+5516997607385"><img src="imagens/telefone.png" alt="telefone"></a><br>
-            <a class="redes-item" href="https://maps.app.goo.gl/Dr8qtJCcFPwzYmXw5"><img
-                    src="imagens/safari.png" alt="maps"></a><br>
+            <a class="redes-item" href="instagram.html" target="tela" data-target="instagram.html">
+                <img src="imagens/logo-instagram.jpg" alt="Instagram">
+            </a><br>
+            <a class="redes-item" href="facebook.html" target="tela" data-target="facebook.html">
+                <img src="imagens/logo-facebook.jpg" alt="Facebook">
+            </a><br>
+            <a class="redes-item" href="https://wa.me/5516997607385">
+                <img src="imagens/whatsap.png" alt="whatsap">
+            </a><br>
+            <a class="redes-item" href="tel:+5516997607385">
+                <img src="imagens/telefone.png" alt="telefone">
+            </a><br>
+            <a class="redes-item" href="https://maps.app.goo.gl/Dr8qtJCcFPwzYmXw5">
+                <img src="imagens/safari.png" alt="maps">
+            </a><br>
 
         </section>
     </main>
@@ -68,6 +190,8 @@
             <img src="imagens/rodape.png" alt="Rodapé">
         </a>
     </div>
+
+    <div id="fake-cursor"></div>
 
     <script>
         const itensOcultavel = document.querySelectorAll(".ocultavel");
@@ -88,10 +212,10 @@
                     navigate(target);
                 }
 
-                // Get the href attribute
+                // Pega o atributo href
                 const href = this.getAttribute('href');
 
-                // Check if it's one of the links that should open in a new tab
+                // Verifica se é um dos links que deve abrir em nova aba
                 if (href === 'https://wa.me/5516997607385' || href === 'tel:+5516997607385' || href === 'https://maps.app.goo.gl/Dr8qtJCcFPwzYmXw5') {
                     window.open(href, '_blank');
                 }
@@ -106,7 +230,26 @@
                 navigate(target);
             }
         });
+
+        // Aplica a animação a todos os ícones ao carregar a página
+        window.addEventListener('load', () => {
+            redesSociaisItens.forEach(item => {
+                item.classList.add('animated-click');
+                setTimeout(() => {
+                    item.classList.remove('animated-click');
+                }, 7000);
+            });
+        });
+
+        /* 4. DESATIVE OUTRAS ANIMAÇÕES (se houver) */
+        /* Exemplo:
+        const elementosAnimados = document.querySelectorAll('.alguma-classe-animada');
+        elementosAnimados.forEach(el => {
+            el.style.animation = 'none';
+        });
+        */
     </script>
+    <a href="imagens/cursor.png" title="cursor ícones"></a>
 </body>
 
 </html>
